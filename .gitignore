@@ -1,0 +1,7 @@
+/bin
+/obj
+/nob
+.vs
+
+*.exe
+*.exe.old
