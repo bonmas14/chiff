@@ -206,44 +206,40 @@ int main(int argc, char **argv) {
 
     Subseq *begin = get_subsequence(origin, compare, get_temporary_allocator());
 
-    {
-        Subseq prev = {};
-
-        {
-            Subseq *temp = begin;
-            tprint("> %s\n", STR(argv[1]));
-            for (u64 i = prev.origin_index; i < origin_lines.count; i++) {
-                if (temp && temp->origin_index != i) {
-                    tprint("- ");
-                    print_line(origin_file, origin_lines[i]);
-                } else if (temp) {
-                    tprint("  ");
-                    print_line(origin_file, origin_lines[i]);
-                    temp = temp->next;
-                } else {
-                    tprint("- ");
-                    print_line(origin_file, origin_lines[i]);
-                }
+    { // print origin file
+        Subseq *temp = begin;
+        tprint("> %s\n", STR(argv[1]));
+        for (u64 i = 0; i < origin_lines.count; i++) {
+            if (temp && temp->origin_index != i) {
+                tprint("- ");
+                print_line(origin_file, origin_lines[i]);
+            } else if (temp) {
+                tprint("  ");
+                print_line(origin_file, origin_lines[i]);
+                temp = temp->next;
+            } else {
+                tprint("- ");
+                print_line(origin_file, origin_lines[i]);
             }
         }
-        
-        tprint("\n");
+    }
 
-        {
-            Subseq *temp = begin;
-            tprint("> %s\n", STR(argv[2]));
-            for (u64 i = 0; i < compare_lines.count; i++) {
-                if (temp && temp->compare_index != i) {
-                    tprint("+ ");
-                    print_line(compare_file, compare_lines[i]);
-                } else if (temp) {
-                    tprint("  ");
-                    print_line(compare_file, compare_lines[i]);
-                    temp = temp->next;
-                } else {
-                    tprint("+ ");
-                    print_line(compare_file, compare_lines[i]);
-                }
+    tprint("\n");
+
+    { // print compared file
+        Subseq *temp = begin;
+        tprint("> %s\n", STR(argv[2]));
+        for (u64 i = 0; i < compare_lines.count; i++) {
+            if (temp && temp->compare_index != i) {
+                tprint("+ ");
+                print_line(compare_file, compare_lines[i]);
+            } else if (temp) {
+                tprint("  ");
+                print_line(compare_file, compare_lines[i]);
+                temp = temp->next;
+            } else {
+                tprint("+ ");
+                print_line(compare_file, compare_lines[i]);
             }
         }
     }
