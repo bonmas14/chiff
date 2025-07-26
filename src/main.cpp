@@ -70,7 +70,7 @@ Subseq *get_subsequence(List<meow_u128> origin, List<meow_u128> compare, Allocat
 }
 
 meow_u128 get_hash(u64 size, void *data) {
-    assert(size > 0);
+    // assert(size > 0);
     assert(data != 0);
     return MeowHash(MeowDefaultSeed, size, data);
     //
@@ -168,9 +168,10 @@ List<meow_u128> get_hashed_lines(String file) {
 }
 
 void print_line(String file, Line line) {
+    if (line.start == line.stop) return;
 
     String l = {
-        .size = line.stop - line.start - 1, // @todo, as we on windows, we have \r also, so we need to delete it too
+        .size = line.stop - line.start, // @todo, as we on windows, we have \r also, so we need to delete it too
         .data = file.data + line.start
     };
 
